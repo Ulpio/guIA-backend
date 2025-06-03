@@ -1,0 +1,174 @@
+# Binários
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+main
+guia-backend
+bin/
+dist/
+
+# Arquivos de teste
+*.test
+*.out
+coverage.out
+coverage.html
+*.prof
+
+# Arquivos de configuração sensíveis
+.env
+.env.local
+.env.production
+.env.staging
+*.pem
+*.key
+*.crt
+
+# Dependências do Go
+vendor/
+go.sum.backup
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Arquivos do macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Arquivos do Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Arquivos do Linux
+*~
+
+# Logs
+*.log
+logs/
+log/
+
+# Arquivos temporários
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Arquivos de backup
+*.bak
+*.backup
+*.orig
+
+# Arquivos de cache
+*.cache
+.cache/
+
+# Arquivos de build
+build/
+out/
+
+# Arquivos de documentação gerados
+docs/generated/
+
+# Arquivos de Docker
+.dockerignore.backup
+
+# Arquivos de bancos de dados locais
+*.db
+*.sqlite
+*.sqlite3
+
+# Arquivos de profiling
+cpu.prof
+mem.prof
+block.prof
+mutex.prof
+
+# Arquivos do Air (hot reload)
+.air.toml
+tmp/
+
+# Arquivos de migrações personalizadas
+migrations/*.sql.backup
+
+# Arquivos de uploads (se implementado localmente)
+uploads/
+storage/
+
+# Arquivos de certificados SSL/TLS locais
+certs/
+ssl/
+
+# Arquivos de configuração do editor
+.editorconfig.backup
+
+# Arquivos de configuração do linter
+.golangci.yml.backup
+
+# Diretório de node_modules (caso tenha frontend integrado)
+node_modules/
+
+# Arquivos do NPM/Yarn
+package-lock.json
+yarn.lock
+
+# Arquivos de build do frontend
+public/build/
+public/dist/
+
+# Arquivos de análise de segurança
+security-scan-results/
+
+# Arquivos de benchmark
+benchmark-results/
+
+# Arquivos de teste de carga
+load-test-results/
+
+# Arquivos de backup do banco de dados
+*.sql.backup
+*.dump
+
+# Arquivos de configuração local
+config.local.yml
+config.local.json
+
+# Arquivos de chaves API
+api-keys.txt
+secrets.txt
+
+# Arquivos de debug
+debug.log
+error.log
+
+# Arquivos de métricas
+metrics/
+
+# Arquivos de sessão do Vim
+*.swn
+*.swm
+
+# Arquivos de sessão do Emacs
+\#*\#
+.\#*
+
+# Arquivos do JetBrains
+*.iml
+*.iws
+*.ipr
+
+# Arquivos do Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Arquivos do Atom
+.atom/
+
+# Arquivos de profiling do Go
+*.pprof
