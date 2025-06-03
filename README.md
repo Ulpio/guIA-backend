@@ -7,6 +7,7 @@ Uma plataforma de rede social voltada para viajantes e autônomos que gostem de 
 ### Versão Atual (MVP)
 - ✅ **Autenticação JWT** - Registro, login e gerenciamento de sessões
 - ✅ **Perfis de Usuário** - Perfis pessoais e empresariais com verificação
+- ✅ **Upload de Mídia** - Upload de imagens e vídeos para posts
 - ✅ **Posts Sociais** - Compartilhamento de texto, imagens e vídeos
 - ✅ **Sistema de Curtidas** - Interação com posts
 - ✅ **Sistema de Seguidores** - Seguir/deixar de seguir usuários
@@ -20,9 +21,9 @@ Uma plataforma de rede social voltada para viajantes e autônomos que gostem de 
 - 🔄 **IA para Recomendações** - Sugestões personalizadas de roteiros
 - 🔄 **Parcerias Empresariais** - Roteiros corporativos (iFood, XP Investimentos, etc.)
 - 🔄 **Chat e Mensagens** - Sistema de mensagens privadas
-- 🔄 **Upload de Mídia** - Integração com AWS S3/Cloudinary
 - 🔄 **Comentários** - Sistema de comentários em posts e roteiros
 - 🔄 **Notificações** - Sistema de notificações em tempo real
+- 🔄 **Processamento de Imagem** - Redimensionamento e otimização automática
 
 ## 🛠 Tecnologias
 
@@ -195,6 +196,53 @@ Authorization: Bearer {token}
 ```http
 POST /api/v1/users/{id}/follow
 Authorization: Bearer {token}
+```
+
+### Upload de Mídia
+
+#### Upload de Imagem
+```http
+POST /api/v1/media/upload/image
+Authorization: Bearer {token}
+Content-Type: multipart/form-data
+
+file: [arquivo_imagem.jpg]
+```
+
+#### Upload de Vídeo
+```http
+POST /api/v1/media/upload/video
+Authorization: Bearer {token}
+Content-Type: multipart/form-data
+
+file: [arquivo_video.mp4]
+```
+
+#### Upload Múltiplo
+```http
+POST /api/v1/media/upload/multiple
+Authorization: Bearer {token}
+Content-Type: multipart/form-data
+
+files: [arquivo1.jpg, arquivo2.png, video.mp4]
+type: image (opcional - filtra apenas imagens)
+```
+
+#### Criar Post com Mídia
+```http
+POST /api/v1/posts
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "content": "Confira essas fotos da viagem!",
+  "post_type": "image",
+  "media_urls": [
+    "http://localhost:8080/uploads/images/123_1640995200_abc12345.jpg",
+    "http://localhost:8080/uploads/images/123_1640995201_def67890.jpg"
+  ],
+  "location": "Rio de Janeiro, RJ"
+}
 ```
 
 ## 🏗 Arquitetura
