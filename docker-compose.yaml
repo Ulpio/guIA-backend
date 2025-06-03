@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  # Banco de dados PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: guia_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: guia_db
+      POSTGRES_USER: guia_user
+      POSTGRES_PASSWORD: guia_password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U guia_user -d guia_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - guia_network
+
+  # Aplicação Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: guia_backend
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgres://guia_user:guia_password@postgres:5432/guia_db?sslmode=disable
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+      - PORT=8080
+      - ENVIRONMENT=development
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      # Para desenvolvimento com hot reload (opcional)
+      - .:/app
+    networks:
+      - guia_network
+
+  # Redis para cache (opcional - para implementação futura)
+  redis:
+    image: redis:7-alpine
+    container_name: guia_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - guia_network
+
+  # Adminer para administração do banco (opcional)
+  adminer:
+    image: adminer:latest
+    container_name: guia_adminer
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    depends_on:
+      - postgres
+    networks:
+      - guia_network
+    profiles:
+      - admin
+
+# Volumes persistentes
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+# Rede personalizada
+networks:
+  guia_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
